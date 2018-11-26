@@ -1,0 +1,15 @@
+
+###
+	一定在BIOS把UEFI禁止
+###
+ubuntu 显卡驱动安装
+1.sudo apt remove --purge nvidia* 卸载已有驱动
+2.禁用nouveau驱动
+	a.sudo vim /etc/modprobe.d/blacklist.conf
+	b.添加下面信息 
+	  blacklist nouveau
+	  options nouveau modeset=0
+	c.sudo update-initramfs -u更新系统内核
+	d.reboot重启
+	e.lsmod | grep nouveau 检查禁用是否成功
+3.添加ppa源

@@ -1,0 +1,13 @@
+
+模型部署
+1.tensorflow rt
+2.pytorch
+3.caffee
+
+沃尔玛
+ticket switch
+
+k8s
+
+kubectl logs -f pods/kubernetes-dashboard-866c7586d-gw876 -n kube-system 
+kubectl logs -f pods/kube-dns-b4bd9576-r4gxr -n kube-system

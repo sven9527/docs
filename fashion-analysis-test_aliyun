@@ -1,0 +1,21 @@
+fashion-analysis-test:
+    image: 'registry.aliyuncs.com/malongtech/fashion_analysis:0.0.48'
+    ports:
+      - '9090/tcp'
+    environment:
+      - 'FASHION_DETECTOR_URL=http://10.0.11.41:7002/service/detect/cloth'
+      - 'SEGMENTATION_URL=http://segmentation-2.ccd0e5cdb39ea4af5bc485f873db826a8.cn-hangzhou.alicontainer.com/v1/fashion_seg__5/segment/npy'
+      - 'COLOR_EXTRACTION_URL=http://color-extraction-service.cd2f86ba949614bf09ece99bf8037c924.cn-hangzhou.alicontainer.com/api/v1/analyze/color'
+      - 'TEXTURE_CLASSIFICATION_URL=http://10.0.2.214/service/classify/fashion_tagging_googlenet_v3__1_1'
+      - 'TEXTURE_CLASSIFICATION_SERVICE_ID=_0000123'
+      - 'ALIYUN_ACCESS_ID=LTAIk9EbLbZeCdlJ'
+      - 'ALIYUN_ACCESS_SECRET=SdyFVRJO0qZdSuKN2wqNmB16IGbgWP'
+      - 'ALIYUN_OSS_BUCKET=productai-query'
+      - 'ALIYUN_OSS_ENDPOINT=cn-hangzhou'
+      - 'ALIYUN_OSS_NETWORK=vpc'
+      - 'SENTRY_DSN=http://ba0bdf5b303b45f19c974f575566161c:711e3a37e5d74f97944d7ff366728ab3@sentry.cfbad368ef3e0438a868fdb74a4d712b4.cn-hangzhou.alicontainer.com/50'
+      - 'STATSD_HOST=10.0.2.105'
+    labels:
+      aliyun.routing.port_9090: fashion-analysis-test
+      aliyun.scale: 1
+    command: ["gunicorn","-c","gunicorn_conf.py", "wsgi:app"]
