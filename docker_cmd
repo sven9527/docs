@@ -6,6 +6,13 @@
 删除某个镜像：sudo docker rmi [TAG] or IMAGEID
 强行删除某个镜像：sudo docker rmi -f [TAG] or IMAGEID
 
+列出虚悬镜像(旧镜像被覆盖掉名字、TAG)：sudo docker image ls -f dangling=true
+删除虚悬镜像：sudo docker image prune
+
+查看中间层镜像：sudo docker images -a
+中间层镜像为顶层镜像所依赖的镜像，无需手动删除，删除顶层镜像时会自动删除
+
+
 创建镜像：docker commit
 	1.基于dockerfile
 	sudo docker build -t home/zhangxing/PycharmProjects/fashion-analysis/
@@ -49,6 +56,31 @@ OPTIONS: 1. -f 强制终止并删除
 2.导入（为镜像）：cat xxxx.tar | sudo docker import - namexxx
 
 
+=============DockerFile===============
+DockerFile中每个指令都会建立一层，并在该层上执行这些命令，执行结束后，commit这一层的修改，构成新的镜像。
+***因此不应该过多使用多行命令，这是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里.
+
+
+Good Example:
+========>>>>>
+
+FROM debian:jessie
+
+RUN buildDeps='gcc libc6-dev make' \
+    && apt-get update \
+    && apt-get install -y $buildDeps \
+    && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \
+    && mkdir -p /usr/src/redis \
+    && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
+    && make -C /usr/src/redis \
+    && make -C /usr/src/redis install \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm redis.tar.gz \
+    && rm -r /usr/src/redis \
+    && apt-get purge -y --auto-remove $buildDeps
+
+
+=====================================
 
 
 Docker-compose
