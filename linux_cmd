@@ -2,3 +2,17 @@
 ctrl+alt+t  调出多窗口
 
 tar -zxvf xxx 解压缩tar包
+
+# 更新brew
+brew -update reset
+brew -update
+brew -upgrade
+
+# 加速GitHub 添加host
+sudo vim /etc/hosts
+# 添加下列主机名
+140.82.112.4 github.com
+199.232.69.194 github.global.ssl.fastly.net
+185.199.108.153 assets-cdn.github.com
+# 刷新host
+sudo /etc/init.d/network-manager restart
