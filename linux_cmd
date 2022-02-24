@@ -1,2 +1,4 @@
 
 ctrl+alt+t  调出多窗口
+
+tar -zxvf xxx 解压缩tar包
